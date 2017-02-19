@@ -18,19 +18,19 @@ import random
 pygame.init()
 
 screen=pygame.display.set_mode((640,480),0,32)
-pygame.display.set_caption("Pong Pong!")
+pygame.display.set_caption("Pong Simulator")
 
 #Creating 2 bars, a ball and background.
-back = pygame.Surface((640,480))
+back = pygame.Surface((640,480)) #grid
 background = back.convert()
-background.fill((0,0,0))
-bar = pygame.Surface((10,50))
-bar1 = bar.convert()
-bar1.fill((255, 255, 255))
-bar2 = bar.convert()
-bar2.fill((255, 255, 255))
+background.fill((0,0,0)) #fill with black
+bar = pygame.Surface((10,50)) #make bar objet
+bar1 = bar.convert() #first bar
+bar1.fill((255, 255, 255)) #color
+bar2 = bar.convert() #second bar
+bar2.fill((255, 255, 255)) #color
 circ_sur = pygame.Surface((15,15))
-circ = pygame.draw.circle(circ_sur,(0,255,0),(15/2,15/2),15/2)
+circ = pygame.draw.circle(circ_sur,(0,255,0),(15/2,15/2),15/2) #surface, color, position, radius, width
 circle = circ_sur.convert()
 circle.set_colorkey((0,0,0))
 
@@ -71,7 +71,7 @@ while bar1_score == 0 and bar2_score == 0:
     circle_y += speed_y * time_sec
     #ai_speed = speed_circ * time_sec
     ai_speed = 1
-    clock.tick(9999999);
+
     #right side AI
     bar2_y = circle_y * (random.randrange(9, 10) * .1);
 
@@ -79,28 +79,30 @@ while bar1_score == 0 and bar2_score == 0:
     bar1_y = circle_y * (random.randrange(9, 10) * .1);
 
     #Collision
-    if circle_x <= bar1_x + 10.:
+    if circle_x <= bar1_x + 8:
         if circle_y >= bar1_y - 7.5 and circle_y <= bar1_y + 42.5:
             circle_x = 20.
+            # TODO add randomness here
             speed_x = -speed_x
-    if circle_x >= bar2_x - 15.:
+    if circle_x >= bar2_x - 17:
         if circle_y >= bar2_y - 7.5 and circle_y <= bar2_y + 42.5:
             circle_x = 605.
+            # TODO add randomness here
             speed_x = -speed_x
     #never executed??
-    if circle_x < 5.:
-        bar2_score += 1
-        circle_x, circle_y = 320., 232.5
-        bar1_y,bar_2_y = 215., 215.
-    elif circle_x > 620.:
-        bar1_score += 1
-        circle_x, circle_y = 307.5, 232.5
-        bar1_y, bar2_y = 215., 215.
-    if circle_y <= 10.:
-        speed_y = -speed_y
-        circle_y = 10.
-    elif circle_y >= 457.5:
-        speed_y = -speed_y
-        circle_y = 457.5
+    #if circle_x < 5.:
+    #    bar2_score += 1
+    #    circle_x, circle_y = 320., 232.5
+    #    bar1_y,bar2_y = 215., 215.
+    #elif circle_x > 620.:
+    #    bar1_score += 1
+    #    circle_x, circle_y = 307.5, 232.5
+    #    bar1_y, bar2_y = 215., 215.
+    #if circle_y <= 10.:
+    #    speed_y = -speed_y
+    #    circle_y = 10.
+    #elif circle_y >= 457.5:
+    #    speed_y = -speed_y
+    #    circle_y = 457.5
 
-    pygame.display.update()
+    pygame.display.update() #updates program
