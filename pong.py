@@ -63,21 +63,22 @@ while bar1_score == 0 and bar2_score == 0:
     screen.blit(score1,(250.,210.))
     screen.blit(score2,(380.,210.))
 
-# movement of circle
+    #movement of circle
     time_passed = clock.tick(30)
     time_sec = time_passed / 1000.0
 
     circle_x += speed_x * time_sec
     circle_y += speed_y * time_sec
-    ai_speed = speed_circ * time_sec
-    #Right Side AI Y position
-    bar2_y = circle_y
+    #ai_speed = speed_circ * time_sec
+    ai_speed = 1
+    clock.tick(9999999);
+    #right side AI
+    bar2_y = circle_y * (random.randrange(9, 10) * .1);
+
     #Left Side AI position
-    bar1_y = circle_y
+    bar1_y = circle_y * (random.randrange(9, 10) * .1);
 
-
-
-        #Collision
+    #Collision
     if circle_x <= bar1_x + 10.:
         if circle_y >= bar1_y - 7.5 and circle_y <= bar1_y + 42.5:
             circle_x = 20.
@@ -86,6 +87,7 @@ while bar1_score == 0 and bar2_score == 0:
         if circle_y >= bar2_y - 7.5 and circle_y <= bar2_y + 42.5:
             circle_x = 605.
             speed_x = -speed_x
+    #never executed??
     if circle_x < 5.:
         bar2_score += 1
         circle_x, circle_y = 320., 232.5
