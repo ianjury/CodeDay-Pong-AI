@@ -40,19 +40,12 @@ bar1_y, bar2_y = 215. , 215.
 circle_x, circle_y = 307.5, 232.5
 bar1_move, bar2_move = 0. , 0.
 speed_x, speed_y, speed_circ = 250., 250., 250.
-bar1_score, bar2_score = 0,0
+
 #clock and font objects
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("calibri",40)
 
-while bar1_score == 0 and bar2_score == 0:
-
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            exit()
-
-    score1 = font.render(str(bar1_score), True,(255,255,255))
-    score2 = font.render(str(bar2_score), True,(255,255,255))
+while True:
 
     screen.blit(background,(0,0))
     frame = pygame.draw.rect(screen,(255,255,255),Rect((5,5),(630,470)),2)
@@ -60,8 +53,6 @@ while bar1_score == 0 and bar2_score == 0:
     screen.blit(bar1,(bar1_x,bar1_y))
     screen.blit(bar2,(bar2_x,bar2_y))
     screen.blit(circle,(circle_x,circle_y))
-    screen.blit(score1,(250.,210.))
-    screen.blit(score2,(380.,210.))
 
     #movement of circle
     time_passed = clock.tick(30)
@@ -89,15 +80,14 @@ while bar1_score == 0 and bar2_score == 0:
             circle_x = 605.
             # TODO add randomness here
             speed_x = -speed_x
-    #never executed??
+
+    #Increments score
     if circle_x < 5.:
-        bar2_score += 1
-        circle_x, circle_y = 320., 232.5
-        bar1_y,bar2_y = 215., 215.
+        exit()
     elif circle_x > 620.:
-        bar1_score += 1
-        circle_x, circle_y = 307.5, 232.5
-        bar1_y, bar2_y = 215., 215.
+        exit()
+
+    #Constrains vertical range of ball
     if circle_y <= 10.:
         speed_y = -speed_y
         circle_y = 10.
