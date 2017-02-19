@@ -20,8 +20,8 @@ import pongNet
 #Change this to manipulate speed of simulation
 GLOBAL_WIDTH = 640
 GLOBAL_HEIGHT = 480
-#GLOBAL_SPEED = 99999999
-GLOBAL_SPEED = 50
+GLOBAL_SPEED = 99999999
+#GLOBAL_SPEED = 50
 GLOBAL_OFFSET = GLOBAL_HEIGHT / 200
 
 #generates random number for variance in direction
@@ -66,9 +66,9 @@ def movePadel(currentPosition, changeAmount):
 
 #main method- magic happens here
 def realMain():
-    initialArray = [2.7755575615628914e-17, 1.2, 4.69630673247786, 0.5]
+    #initialArray = [2.7755575615628914e-17, 1.2, 4.69630673247786, 0.5]
 
-#    initialArray = [0.01, 0.01, 0.01, 0.01]
+    initialArray = [0.01, 0.01, 0.01, 0.01]
     count = 0
     winner1 = main(initialArray, count)
     count+=1
@@ -83,7 +83,7 @@ def main(array, count):
     pygame.init()
     x = 0
     layer1 = array
-    layer2 =array
+    layer2 =pongNet.evolv(list(array))
     inputs = [1.01, 1.01, 1.01]
     if count == 0:
         for x in range(0, 3):
