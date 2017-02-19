@@ -15,20 +15,26 @@ from math import atan2, degrees, pi, sqrt
 from pygame.locals import *
 from sys import exit
 import random
+import pongNet
 
 #Change this to manipulate speed of simulation
 GLOBAL_WIDTH = 640
 GLOBAL_HEIGHT = 480
-GLOBAL_SPEED = 100
+GLOBAL_SPEED = 50
 GLOBAL_OFFSET = GLOBAL_HEIGHT / 200
 
 #generates random number for variance in direction
 def getRandomNum():
     return (random.randrange(9, 10) * .1)
 
+#returns 1 if someone has won. 0 Otherwise
+def getWinner(num):
+    return num
+
 #returns game statistics of: angle ball is travelling, distance from paddle
 #1 to ball, distance of paddle 2 from ball
 def getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y):
+    out = [0, 0, 0]
     midX = GLOBAL_WIDTH / 2
     midY = GLOBAL_HEIGHT / 2
     dx = midX - circle_x
@@ -39,11 +45,10 @@ def getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y):
 
     p1Distance = sqrt((bar1_y - circle_y)**2 / (bar1_x - circle_x)**2)
     p2Distance = sqrt((bar2_y - circle_y)**2 / (bar2_x - circle_x)**2)
-    return angle, p1Distance, p2Distance
-
-#returns 1 if someone has won. 0 Otherwise
-def getWinner(num):
-    return num
+    out[0] = angle
+    out[1] = p1Distance
+    out[2] = p2Distance
+    return out
 
 #determines how to move padel based on neural net input
 def movePadel(currentPosition, changeAmount):
@@ -60,8 +65,21 @@ def movePadel(currentPosition, changeAmount):
 #main method- magic happens here
 def main():
     pygame.init()
+    x = 0
+    layer1 = [0, 0, 0, 0]
+    layer2 = [0, 0, 0, 0]
+    inputs = [1.01, 1.01, 1.01]
+
+    for x in range(0, 3):
+        layer1[x] = random.randrange(1, 6)
+    x = 0
+    for x in range(0, 3):
+        layer2[x] = random.randrange(1, 6)
+
     screen=pygame.display.set_mode((GLOBAL_WIDTH, GLOBAL_HEIGHT),0,32)
+
     pygame.display.set_caption("Pong Simulator")
+
     #Creating 2 bars, a ball and background.
     back = pygame.Surface((640,480)) #grid
     background = back.convert()
@@ -120,15 +138,17 @@ def main():
         circle_y += speed_y * time_sec
         ai_speed = speed_circ * time_sec
         #ai_speed = 1
-
+        inputs = getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y)
         #right side AI
-        #bar2_y = circle_y * getRandomNum();
+        x = pongNet.neuralNetwork(inputs[0], inputs[1], inputs[2], layer1)
+        print x
         # TODO determine how to pass parameter
-        bar2_y = movePadel(bar2_y, random.randrange(0, 10))
+        bar2_y = movePadel(bar2_y, x)
         #Left Side AI position
         #bar1_y = circle_y * getRandomNum();
         # TODO determine how to pass parameter
-        bar1_y = movePadel(bar1_y, random.randrange(0, 10) )
+        x = pongNet.neuralNetwork(inputs[0], inputs[1], inputs[2], layer2)
+        bar1_y = movePadel(bar1_y, x)
 
         #Collision for left side
         if circle_x <= bar1_x + 8:
@@ -163,7 +183,6 @@ def main():
         elif circle_y >= 457.5:
             speed_y = -speed_y * getRandomNum()
             circle_y = 457.5
-        getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y)
         getWinner(0) # 0 since no one was won
         pygame.display.update() #updates game
 
