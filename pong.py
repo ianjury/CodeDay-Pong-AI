@@ -90,19 +90,19 @@ while bar1_score == 0 and bar2_score == 0:
             # TODO add randomness here
             speed_x = -speed_x
     #never executed??
-    #if circle_x < 5.:
-    #    bar2_score += 1
-    #    circle_x, circle_y = 320., 232.5
-    #    bar1_y,bar2_y = 215., 215.
-    #elif circle_x > 620.:
-    #    bar1_score += 1
-    #    circle_x, circle_y = 307.5, 232.5
-    #    bar1_y, bar2_y = 215., 215.
-    #if circle_y <= 10.:
-    #    speed_y = -speed_y
-    #    circle_y = 10.
-    #elif circle_y >= 457.5:
-    #    speed_y = -speed_y
-    #    circle_y = 457.5
+    if circle_x < 5.:
+        bar2_score += 1
+        circle_x, circle_y = 320., 232.5
+        bar1_y,bar2_y = 215., 215.
+    elif circle_x > 620.:
+        bar1_score += 1
+        circle_x, circle_y = 307.5, 232.5
+        bar1_y, bar2_y = 215., 215.
+    if circle_y <= 10.:
+        speed_y = -speed_y
+        circle_y = 10.
+    elif circle_y >= 457.5:
+        speed_y = -speed_y
+        circle_y = 457.5
 
-    pygame.display.update() #updates program
+    pygame.display.update()
