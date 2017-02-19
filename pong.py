@@ -26,9 +26,9 @@ background = back.convert()
 background.fill((0,0,0))
 bar = pygame.Surface((10,50))
 bar1 = bar.convert()
-bar1.fill((0,0,255))
+bar1.fill((255, 255, 255))
 bar2 = bar.convert()
-bar2.fill((255,0,0))
+bar2.fill((255, 255, 255))
 circ_sur = pygame.Surface((15,15))
 circ = pygame.draw.circle(circ_sur,(0,255,0),(15/2,15/2),15/2)
 circle = circ_sur.convert()
@@ -50,16 +50,17 @@ while bar1_score == 0 and bar2_score == 0:
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()
-        if event.type == KEYDOWN:
-            if event.key == K_UP:
-                bar1_move = -ai_speed
-            elif event.key == K_DOWN:
-                bar1_move = ai_speed
-        elif event.type == KEYUP:
-            if event.key == K_UP:
-                bar1_move = 0.
-            elif event.key == K_DOWN:
-                bar1_move = 0.
+            #wont need listeners for AI
+#        if event.type == KEYDOWN:
+#            if event.key == K_UP:
+#                bar1_move = -ai_speed
+#            elif event.key == K_DOWN:
+#                bar1_move = ai_speed
+#        elif event.type == KEYUP:
+#            if event.key == K_UP:
+#                bar1_move = 0.
+#            elif event.key == K_DOWN:
+#                bar1_move = 0.
 
     score1 = font.render(str(bar1_score), True,(255,255,255))
     score2 = font.render(str(bar2_score), True,(255,255,255))
@@ -73,7 +74,7 @@ while bar1_score == 0 and bar2_score == 0:
     screen.blit(score1,(250.,210.))
     screen.blit(score2,(380.,210.))
 
-    bar1_y += bar1_move
+    #bar1_y += bar1_move
 
 # movement of circle
     time_passed = clock.tick(30)
@@ -82,7 +83,7 @@ while bar1_score == 0 and bar2_score == 0:
     circle_x += speed_x * time_sec
     circle_y += speed_y * time_sec
     ai_speed = speed_circ * time_sec
-#AI of the computer.
+    #Right Side AI
     if circle_x >= 305.:
         if not bar2_y == circle_y + 7.5:
             if bar2_y < circle_y + 7.5:
@@ -91,12 +92,23 @@ while bar1_score == 0 and bar2_score == 0:
                 bar2_y -= ai_speed
         else:
             bar2_y == circle_y + 7.5
+        if bar2_y >= 680.: bar2_y = 680.
+        elif bar2_y <= 0.: bar2_y = 0.
 
-    if bar1_y >= 420.: bar1_y = 420.
-    elif bar1_y <= 10. : bar1_y = 10.
-    if bar2_y >= 420.: bar2_y = 420.
-    elif bar2_y <= 10.: bar2_y = 10.
-#since i don't know anything about collision, ball hitting bars goes like this.
+    #Right Side AI
+    if circle_x >= 305.:
+        if not bar1_y == circle_y + 7.5:
+            if bar1_y < circle_y + 7.5:
+                bar1_y += ai_speed
+            if  bar1_y > circle_y - 42.5:
+                bar1_y -= ai_speed
+        else:
+            bar1_y == circle_y + 7.5
+
+        if bar1_y >= 680.: bar1_y = 680.
+        elif bar1_y <= 0. : bar1_y = 0.
+
+#Collision
     if circle_x <= bar1_x + 10.:
         if circle_y >= bar1_y - 7.5 and circle_y <= bar1_y + 42.5:
             circle_x = 20.
