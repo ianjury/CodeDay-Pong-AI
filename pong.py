@@ -20,7 +20,8 @@ import pongNet
 #Change this to manipulate speed of simulation
 GLOBAL_WIDTH = 640
 GLOBAL_HEIGHT = 480
-GLOBAL_SPEED = 400
+#GLOBAL_SPEED = 99999999
+GLOBAL_SPEED = 50
 GLOBAL_OFFSET = GLOBAL_HEIGHT / 200
 
 #generates random number for variance in direction
@@ -42,9 +43,10 @@ def getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y):
     rads = atan2(-dy, dx)
     rads %= 2*pi
     angle = degrees(rads)
-
-    p1Distance = sqrt((bar1_y - circle_y)**2 / (bar1_x - circle_x)**2)
-    p2Distance = sqrt((bar2_y - circle_y)**2 / (bar2_x - circle_x)**2)
+    if  (bar1_x - circle_x)**2 != 0:
+        p1Distance = sqrt((bar1_y - circle_y)**2 / (bar1_x - circle_x)**2)
+    if (bar2_x - circle_x)**2 != 0:
+        p2Distance = sqrt((bar2_y - circle_y)**2 / (bar2_x - circle_x)**2)
     out[0] = angle
     out[1] = p1Distance
     out[2] = p2Distance
@@ -64,11 +66,13 @@ def movePadel(currentPosition, changeAmount):
 
 #main method- magic happens here
 def realMain():
-    initialArray = [0.01, 0.01, 0.01, 0.01]
+    initialArray = [2.7755575615628914e-17, 1.2, 4.69630673247786, 0.5]
+
+#    initialArray = [0.01, 0.01, 0.01, 0.01]
     count = 0
     winner1 = main(initialArray, count)
     count+=1
-    for i in range(1, 1000):
+    for i in range(1, 1000000):
         winner2 = main(winner1, count)
         winner1 = winner2
         pongNet.evolv(winner1)

@@ -51,24 +51,32 @@ def evolv(e):
         #random.seed(a = None)
         y = random.randint(0, 4)
         x = random.randint(0, 1)
-        change = 1.5
+        change = .1
         if(y == 0):
-                if(x == 1 and e[0] <= 7):
-                        e[0] = e[0] + change
-                elif(x == 0 and e[0] > 0):
-                        e[0] = e[0] - change
+            if(x == 1 and e[0] <= 7):
+                e[0] = e[0] + change
+            elif(x == 0 and e[0] > 0):
+				e[0] = e[0] - change
+            if e[0] <= 0:
+                e[0] = 0
         elif(y == 1):
-                if(x == 1 and e[1] <= 7):
-                        e[1] = e[1] + change
-                elif(x == 0 and e[1] > 0):
-                        e[1] = e[1] - change
+            if(x == 1 and e[1] <= 7):
+                e[1] = e[1] + change
+            elif(x == 0 and e[1] > 0):
+                e[1] = e[1] - change
+            if e[1] <= 0:
+			 	e[1] = 0
         elif(y == 2):
-                if(x == 1 and e[2] <= 7):
-                        e[2] = e[2] + change
-                elif(x == 0 and e[2] > 0):
-                        e[2] = e[2] - change
+            if(x == 1 and e[2] <= 7):
+            	e[2] = e[2] + change
+            elif(x == 0 and e[2] > 0):
+				e[2] = e[2] - change
+            if e[2] <= 0:
+                e[2] = 0
         elif(y == 3):
-                if(x == 1 and e[3] <= 7):
-                        e[3] = e[3] - change
-                elif(x == 0 and e[3] > 0):
-                        e[3] = e[3] - change
+            if(x == 1 and e[3] <= 7):
+                e[3] = e[3] + change
+            elif(x == 0 and e[3] > 0):
+                e[3] = e[3] - change
+            if e[3] <= 0:
+                e[3] = 0
