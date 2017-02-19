@@ -11,6 +11,7 @@
 #       GNU General Public License for more details.
 
 import pygame
+from math import atan2, degrees, pi, sqrt
 from pygame.locals import *
 from sys import exit
 import random
@@ -24,6 +25,25 @@ GLOBAL_OFFSET = GLOBAL_HEIGHT / 200
 #generates random number for variance in direction
 def getRandomNum():
     return (random.randrange(9, 10) * .1)
+
+#returns game statistics of: angle ball is travelling, distance from paddle
+#1 to ball, distance of paddle 2 from ball
+def getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y):
+    midX = GLOBAL_WIDTH / 2
+    midY = GLOBAL_HEIGHT / 2
+    dx = midX - circle_x
+    dy = midY - circle_y
+    rads = atan2(-dy, dx)
+    rads %= 2*pi
+    angle = degrees(rads)
+
+    p1Distance = sqrt((bar1_y - circle_y)**2 / (bar1_x - circle_x)**2)
+    p2Distance = sqrt((bar2_y - circle_y)**2 / (bar2_x - circle_x)**2)
+    return angle, p1Distance, p2Distance
+
+#returns 1 if someone has won. 0 Otherwise
+def getWinner(num):
+    return num
 
 #determines how to move padel based on neural net input
 def movePadel(currentPosition, changeAmount):
@@ -127,10 +147,12 @@ def main():
 
         #Increments score
         if circle_x < 5.:
-            print "RIGHT AI WINS"
+            #print "RIGHT AI WINS"
+            getWinner(1)
             exit()
         elif circle_x > 620.:
-            print "LEFT AI WINS"
+            #print "LEFT AI WINS"
+            getWinner(1)
             exit()
 
         #Constrains vertical range of ball
@@ -140,7 +162,8 @@ def main():
         elif circle_y >= 457.5:
             speed_y = -speed_y * getRandomNum()
             circle_y = 457.5
-
+        getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y)
+        getWinner(0) # 0 since no one was won
         pygame.display.update() #updates game
 
 main()
