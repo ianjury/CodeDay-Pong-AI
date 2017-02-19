@@ -45,28 +45,30 @@ def neuralNetwork(input1, input2, input3, externLayer):	#externLayer is (presuma
 	return (output % 8) + 1
 
 def evolv(e):
+
         y = 0
         x = 0
         #random.seed(a = None)
         y = random.randint(0, 4)
         x = random.randint(0, 1)
+        change = 1.5
         if(y == 0):
-                if(x == 1):
-                        e[0] = e[0] + 0.5
-                if(x == 0):
-                        e[0] = e[0] - 0.5
-        if(y == 1):
-                if(x == 1):
-                        e[1] = e[1] + 0.5
-                if(x == 0):
-                        e[1] = e[1] - 0.5
-        if(y == 2):
-                if(x == 1):
-                        e[2] = e[2] + 0.5
-                if(x == 0):
-                        e[2] = e[2] - 0.5
-        if(y == 3):
-                if(x == 1):
-                        e[3] = e[3] - 0.5
-                if(x == 0):
-                        e[3] = e[3] - 0.5
+                if(x == 1 and e[0] <= 7):
+                        e[0] = e[0] + change
+                elif(x == 0 and e[0] > 0):
+                        e[0] = e[0] - change
+        elif(y == 1):
+                if(x == 1 and e[1] <= 7):
+                        e[1] = e[1] + change
+                elif(x == 0 and e[1] > 0):
+                        e[1] = e[1] - change
+        elif(y == 2):
+                if(x == 1 and e[2] <= 7):
+                        e[2] = e[2] + change
+                elif(x == 0 and e[2] > 0):
+                        e[2] = e[2] - change
+        elif(y == 3):
+                if(x == 1 and e[3] <= 7):
+                        e[3] = e[3] - change
+                elif(x == 0 and e[3] > 0):
+                        e[3] = e[3] - change

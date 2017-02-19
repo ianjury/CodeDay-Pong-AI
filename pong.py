@@ -68,7 +68,7 @@ def realMain():
     count = 0
     winner1 = main(initialArray, count)
     count+=1
-    for i in range(1, 100):
+    for i in range(1, 1000):
         winner2 = main(winner1, count)
         winner1 = winner2
         pongNet.evolv(winner1)
