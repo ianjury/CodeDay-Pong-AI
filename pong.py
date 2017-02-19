@@ -45,8 +45,7 @@ speed_x, speed_y, speed_circ = 250., 250., 250.
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("calibri",40)
 
-while True:
-
+while True: #game logic
     screen.blit(background,(0,0))
     frame = pygame.draw.rect(screen,(255,255,255),Rect((5,5),(630,470)),2)
     middle_line = pygame.draw.aaline(screen,(255,255,255),(330,5),(330,475))
@@ -95,4 +94,4 @@ while True:
         speed_y = -speed_y
         circle_y = 457.5
 
-    pygame.display.update()
+    pygame.display.flip()
