@@ -83,7 +83,8 @@ def main(array, count):
     pygame.init()
     x = 0
     layer1 = array
-    layer2 =pongNet.evolv(list(array))
+    layer2 = list(array)
+    pongNet.evolv(layer2)
     inputs = [1.01, 1.01, 1.01]
     if count == 0:
         for x in range(0, 3):
