@@ -20,7 +20,7 @@ import pongNet
 #Change this to manipulate speed of simulation
 GLOBAL_WIDTH = 640
 GLOBAL_HEIGHT = 480
-GLOBAL_SPEED = 50
+GLOBAL_SPEED = 400
 GLOBAL_OFFSET = GLOBAL_HEIGHT / 200
 
 #generates random number for variance in direction
@@ -63,18 +63,30 @@ def movePadel(currentPosition, changeAmount):
     return currentPosition
 
 #main method- magic happens here
-def main():
+def realMain():
+    initialArray = [0.01, 0.01, 0.01, 0.01]
+    count = 0
+    winner1 = main(initialArray, count)
+    count+=1
+    for i in range(1, 100):
+        winner2 = main(winner1, count)
+        winner1 = winner2
+        pongNet.evolv(winner1)
+        #count+=1
+        print "Iteration" + str(i) + " = " + str(winner2)
+
+def main(array, count):
     pygame.init()
     x = 0
-    layer1 = [0, 0, 0, 0]
-    layer2 = [0, 0, 0, 0]
+    layer1 = array
+    layer2 =array
     inputs = [1.01, 1.01, 1.01]
-
-    for x in range(0, 3):
-        layer1[x] = random.randrange(1, 6)
-    x = 0
-    for x in range(0, 3):
-        layer2[x] = random.randrange(1, 6)
+    if count == 0:
+        for x in range(0, 3):
+            layer1[x] = random.uniform(1.0, 6.0)
+        x = 0
+        for x in range(0, 3):
+            layer2[x] = random.uniform(1.0, 6.0)
 
     screen=pygame.display.set_mode((GLOBAL_WIDTH, GLOBAL_HEIGHT),0,32)
 
@@ -141,7 +153,7 @@ def main():
         inputs = getStatistics(circle_x, circle_y, bar1_x, bar1_y, bar2_x, bar2_y)
         #right side AI
         x = pongNet.neuralNetwork(inputs[0], inputs[1], inputs[2], layer1)
-        print x
+    #    print x
         # TODO determine how to pass parameter
         bar2_y = movePadel(bar2_y, x)
         #Left Side AI position
@@ -170,10 +182,12 @@ def main():
         if circle_x < 5.:
             #print "RIGHT AI WINS"
             getWinner(1)
+            return layer1
             exit()
         elif circle_x > 620.:
             #print "LEFT AI WINS"
             getWinner(1)
+            return layer2
             exit()
 
         #Constrains vertical range of ball
@@ -186,4 +200,4 @@ def main():
         getWinner(0) # 0 since no one was won
         pygame.display.update() #updates game
 
-main()
+realMain()

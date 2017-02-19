@@ -1,3 +1,4 @@
+import random
 def neuralNetwork(input1, input2, input3, externLayer):	#externLayer is (presumably
 
 	inputs = [1, 2, 3] #This is the inputs.
@@ -43,29 +44,29 @@ def neuralNetwork(input1, input2, input3, externLayer):	#externLayer is (presuma
 	#print (output % 8) + 1
 	return (output % 8) + 1
 
-def evolv(externLayer):
+def evolv(e):
         y = 0
         x = 0
-        random.seed(a = None)
-        y = random.randint(0, 3)
+        #random.seed(a = None)
+        y = random.randint(0, 4)
         x = random.randint(0, 1)
         if(y == 0):
                 if(x == 1):
-                        int0 = int0 + 0.01
+                        e[0] = e[0] + 0.5
                 if(x == 0):
-                        int0 = int0 - 0.01
+                        e[0] = e[0] - 0.5
         if(y == 1):
                 if(x == 1):
-                        int1 = int1 + 0.01
+                        e[1] = e[1] + 0.5
                 if(x == 0):
-                        int1 = int1 - 0.01
+                        e[1] = e[1] - 0.5
         if(y == 2):
                 if(x == 1):
-                        int2 = int2 + 0.01
+                        e[2] = e[2] + 0.5
                 if(x == 0):
-                        int2 = int2 - 0.01
+                        e[2] = e[2] - 0.5
         if(y == 3):
                 if(x == 1):
-                        int3 = int3 + 0.01
+                        e[3] = e[3] - 0.5
                 if(x == 0):
-                        int3 = int3 - 0.01
+                        e[3] = e[3] - 0.5
