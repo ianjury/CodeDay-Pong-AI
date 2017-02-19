@@ -49,7 +49,7 @@ bar1_score, bar2_score = 0,0
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("calibri",40)
 
-while True:
+while bar1_score == 0 and bar2_score == 0:
 
     for event in pygame.event.get():
         if event.type == QUIT:
